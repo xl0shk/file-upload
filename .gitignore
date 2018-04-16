@@ -1,0 +1,15 @@
+bin
+include
+lib
+share
+upload/__pycache__
+.Python
+*.pyc
+*.log
+.settings
+.project
+.pydevproject
+.DS_Store
+.idea
+venv
+pip-selfcheck.json

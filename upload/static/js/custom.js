@@ -19,11 +19,14 @@ $(document).ready(function(){
         },
         uploadFile: {
             url: "#",
-            data: {},
+            data: {value:"file upload", type:"file"},
             type: 'POST',
             enctype: 'multipart/form-data',
             beforeSend: function(){},
             success: function(data, el){
+                console.log(typeof data);
+                console.log(data);
+                // data = JSON.parse(data);
                 var parent = el.find(".jFiler-jProgressBar").parent();
                 if (data.status == 'success') {
                     el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
@@ -46,8 +49,8 @@ $(document).ready(function(){
             onComplete: null
         },
         captions: {
-            button: "Add Files",
-            feedback: "Choose files To Upload",
+            button: "添加文件",
+            feedback: "选择上传的文件",
             feedback2: "files were chosen",
             drop: "Drop file here to Upload",
             removeConfirmation: "Are you sure you want to remove this file?",
@@ -60,7 +63,44 @@ $(document).ready(function(){
             }
         }
     });
+
     $('#close-uploader').click(function() {
-        $('#filer_input').prop("jFiler").reset()
+        //$('#filer_input').prop("jFiler").reset()
+        location.reload();
+    });
+
+    $('.mkdir-confirm').click(function() {
+        console.log($("#mkdir-name").val());
+        value = $("#mkdir-name").val();
+        var newData = {
+            value : value,
+            type : "mkdir"
+        }
+        $.ajax({
+            url: '#',
+            type: 'POST',
+            data: newData,
+            success: function (data, err) {
+                console.log(data, err);
+                location.reload();
+            }
+        })
+    });
+
+    $('.cdn-refresh-confirm').click(function() {
+        console.log($("#cdn-refresh-name").val());
+        cdnurl = $("#cdn-refresh-name").val();
+        var newData = {
+            cdnurl: cdnurl
+        }
+        $.ajax({
+            url: '/refresh',
+            type: 'POST',
+            data: newData,
+            success: function (data, err) {
+                console.log(data, err);
+                alert("刷新成功！请等待10-60秒！")
+            }
+        })
     });
 });
